@@ -122,7 +122,7 @@ public class TerminalHelper {
 	private void printPageHeader(String pageTitle) {
 		print(
 			BLOCK + " " +
-			centredText(pageTitle, "\u2550", TERM_WIDTH - 4) +
+			centredText(pageTitle, DHRULE, TERM_WIDTH - 4) +
 			" " + BLOCK + "\n"
 		);
 	}
