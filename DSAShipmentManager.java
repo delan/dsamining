@@ -6,7 +6,7 @@ public class DSAShipmentManager {
 	public DSAShipmentManager() {
 		shedList = new DSALinkedList<IShed>();
 		orderQueue = new DSAQueue<ShipmentOrder>();
-		term = new TerminalHelper();
+		term = new TerminalHelper("DSA 120 Mining Corporation");
 	}
 	public void run() {
 		while (true) {
