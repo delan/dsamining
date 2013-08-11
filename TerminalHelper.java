@@ -42,16 +42,26 @@ public class TerminalHelper {
 		int finalCol = 3, defaultFinalCol = 3;
 		// Additional newlines to pad with before reaching footer.
 		int padNewlines = TERM_HEIGHT - 5;
+		String wrappedContent = "";
 		// Process the content to figure out the values for above.
+		// Also insert newlines to wrap long lines where necessary.
 		for (int i = 0; i < content.length(); i++) {
+			wrappedContent += content.charAt(i);
 			if (content.charAt(i) == '\n') {
 				finalRow++;
 				finalCol = defaultFinalCol;
 				padNewlines--;
 			} else {
 				finalCol++;
+				if (finalCol == TERM_WIDTH - 1) {
+					wrappedContent += "\n";
+					finalRow++;
+					finalCol = defaultFinalCol;
+					padNewlines--;
+				}
 			}
 		}
+		content = wrappedContent;
 		this.printGlobalHeader();
 		this.printPageHeader(pageTitle);
 		// Pad the content with newlines to fit TERM_HEIGHT.
@@ -88,8 +98,11 @@ public class TerminalHelper {
 			CSI + "H"               // move cursor to top left
 		);
 	}
-	private String repeatText(String text, int times) {
-		return new String(new char[times]).replace("\0", text);
+	private String repeatText(String text, int num) {
+		String result = "";
+		if (num > 0)
+			result = new String(new char[num]).replace("\0", text);
+		return result;
 	}
 	private String centredText(String text, String flank, int width) {
 		int left, right;
