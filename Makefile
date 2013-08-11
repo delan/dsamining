@@ -1,5 +1,5 @@
 JC = javac
-JVM = java
+JVM = ./java.sh
 JFLAGS = -g -Werror
 .SUFFIXES: .java .class
 
@@ -18,7 +18,7 @@ all: $(CLASSES:.java=.class)
 test: all $(TESTCLASSES:.java=)
 
 tersetest: all
-	$(MAKE) test | grep PASSED
+	$(MAKE) test | egrep 'PASSED|#'
 
 run: all $(RUNCLASSES:.java=)
 

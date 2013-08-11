@@ -1,20 +1,20 @@
 import java.util.Iterator;
-public class DSAStack implements Iterable {
-	private DSALinkedList list;
+public class DSAStack<E> implements Iterable<E> {
+	private DSALinkedList<E> list;
 	public DSAStack() {
-		this.list = new DSALinkedList();
+		this.list = new DSALinkedList<E>();
 	}
-	public void push(Object thing) {
+	public void push(E thing) {
 		this.list.insertLast(thing);
 	}
-	public Object pop() {
+	public E pop() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't pop from an empty stack"
 			);
 		return this.list.removeLast();
 	}
-	public Object top() {
+	public E top() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't view the top element of an empty stack"
@@ -23,13 +23,13 @@ public class DSAStack implements Iterable {
 	}
 	public boolean isEmpty() {
 		try {
-			Object thing = this.list.peekFirst();
+			E thing = this.list.peekFirst();
 			return false;
 		} catch (IllegalStateException e) {
 			return true;
 		}
 	}
-	public Iterator iterator() {
+	public Iterator<E> iterator() {
 		return list.iterator();
 	}
 }

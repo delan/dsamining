@@ -1,20 +1,20 @@
 import java.util.Iterator;
-public class DSAQueue implements Iterable {
-	private DSALinkedList list;
+public class DSAQueue<E> implements Iterable<E> {
+	private DSALinkedList<E> list;
 	public DSAQueue() {
-		this.list = new DSALinkedList();
+		this.list = new DSALinkedList<E>();
 	}
-	public void enqueue(Object thing) {
+	public void enqueue(E thing) {
 		this.list.insertLast(thing);
 	}
-	public Object dequeue() {
+	public E dequeue() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't dequeue from an empty queue"
 			);
 		return this.list.removeFirst();
 	}
-	public Object peek() {
+	public E peek() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't view the top element of an empty stack"
@@ -23,13 +23,13 @@ public class DSAQueue implements Iterable {
 	}
 	public boolean isEmpty() {
 		try {
-			Object thing = this.list.peekFirst();
+			E thing = this.list.peekFirst();
 			return false;
 		} catch (IllegalStateException e) {
 			return true;
 		}
 	}
-	public Iterator iterator() {
+	public Iterator<E> iterator() {
 		return list.iterator();
 	}
 }
