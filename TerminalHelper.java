@@ -13,8 +13,10 @@ public class TerminalHelper {
 	;
 	private PrintWriter out;
 	private String appTitle;
-	public TerminalHelper(String appTitle) {
+	private String appFooter;
+	public TerminalHelper(String appTitle, String appFooter) {
 		this.appTitle = appTitle;
+		this.appFooter = appFooter;
 		try {
 			out = new PrintWriter(
 				new OutputStreamWriter(
@@ -127,7 +129,7 @@ public class TerminalHelper {
 			CSI + "H" +             // move cursor to top left
 			CSI + "1m" +            // set bold text
 			CSI + "7m" +            // inverse video
-			centredText(appTitle, " ", TERM_WIDTH) +
+			centredText(this.appTitle, " ", TERM_WIDTH) +
 			CSI + "0m" +            // reset graphics rendition
 			"\n"
 		);
@@ -142,7 +144,7 @@ public class TerminalHelper {
 	private void printGlobalFooter() {
 		print(
 			CSI + "7m" +            // inverse video
-			repeatText(" ", TERM_WIDTH) +
+			centredText(this.appFooter, " ", TERM_WIDTH) +
 			CSI + "0m"              // reset graphics rendition
 		);
 	}

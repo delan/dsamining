@@ -6,7 +6,11 @@ public class DSAShipmentManager {
 	public DSAShipmentManager() {
 		shedList = new DSALinkedList<IShed>();
 		orderQueue = new DSAQueue<ShipmentOrder>();
-		term = new TerminalHelper("DSA 120 Mining Corporation");
+		term = new TerminalHelper(
+			"Data Structures and Algorithms 120: " +
+			"Mining Magnate Edition",
+			"Delan Azabani (#17065012)"
+		);
 	}
 	public void run() {
 		while (true) {
