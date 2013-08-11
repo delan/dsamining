@@ -1,4 +1,5 @@
 // DOUBLE ended, SINGLY linked list.
+import java.util.Iterator;
 public class DSALinkedList {
 	private class DSAListNode {
 		private Object thing;
@@ -6,6 +7,36 @@ public class DSALinkedList {
 		public DSAListNode(Object thing) {
 			this.thing = thing;
 			this.next = null;
+		}
+		public Object getValue() {
+			return this.thing;
+		}
+		public DSAListNode getNext() {
+			return this.next;
+		}
+	}
+	private class DSALinkedListIterator implements Iterator {
+		private DSAListNode iterNext;
+		public DSALinkedListIterator(DSALinkedList list) {
+			iterNext = list.head;
+		}
+		public boolean hasNext() {
+			return iterNext != null;
+		}
+		public Object next() {
+			Object value;
+			if (iterNext == null) {
+				value = null;
+			} else {
+				value = iterNext.getValue();
+				iterNext = iterNext.getNext();
+			}
+			return value;
+		}
+		public void remove() {
+			throw new UnsupportedOperationException(
+				"not supported"
+			);
 		}
 	}
 	private DSAListNode head;
@@ -22,14 +53,14 @@ public class DSALinkedList {
 			throw new IllegalStateException(
 				"can't peek the first element of empty list"
 			);
-		return this.head.thing;
+		return this.head.getValue();
 	}
 	public Object peekLast() {
 		if (this.isEmpty())
 			throw new IllegalStateException(
 				"can't peek the last element of empty list"
 			);
-		return this.tail.thing;
+		return this.tail.getValue();
 	}
 	public void insertFirst(Object thing) {
 		DSAListNode node = new DSAListNode(thing);
@@ -54,8 +85,8 @@ public class DSALinkedList {
 			);
 		if (this.head == this.tail)
 			this.tail = null;
-		Object thing = this.head.thing;
-		this.head = this.head.next;
+		Object thing = this.head.getValue();
+		this.head = this.head.getNext();
 		return thing;
 	}
 	public Object removeLast() {
@@ -63,15 +94,15 @@ public class DSALinkedList {
 			throw new IllegalStateException(
 				"can't remove the last element of empty list"
 			);
-		Object thing = this.tail.thing;
+		Object thing = this.tail.getValue();
 		if (this.head == this.tail)
 			this.head = this.tail = null;
 		else for (
 			DSAListNode cur = this.head;
 			cur != null;
-			cur = cur.next
+			cur = cur.getNext()
 		)
-			if (cur.next == this.tail)
+			if (cur.getNext() == this.tail)
 				this.tail = cur;
 		return thing;
 	}
