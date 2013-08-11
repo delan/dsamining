@@ -5,7 +5,7 @@ JFLAGS = -g -Werror
 
 CLASSES = $(wildcard *.java)
 TESTCLASSES = $(wildcard UnitTest*.java)
-RUNCLASSES = DSAShipmentManager.java
+RUNCLASSES = DSAShipments.java
 
 .java.class:
 	$(JC) $(JFLAGS) $*.java
