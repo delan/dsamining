@@ -1,5 +1,4 @@
 JC = javac
-JVM = ./java.sh
 JFLAGS = -g -Werror
 .SUFFIXES: .java .class
 
@@ -11,7 +10,8 @@ RUNCLASSES = DSAShipments.java
 	$(JC) $(JFLAGS) $*.java
 
 .java:
-	$(JVM) $*
+	dos2unix java.sh
+	./java.sh $*
 
 all: $(CLASSES:.java=.class)
 
