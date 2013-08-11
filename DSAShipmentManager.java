@@ -8,7 +8,7 @@ public class DSAShipmentManager {
 		orderQueue = new DSAQueue<ShipmentOrder>();
 		term = new TerminalHelper(
 			"Data Structures and Algorithms 120: " +
-			"Mining Magnate Edition",
+			"Gina Rinehart Edition",
 			"Delan Azabani (#17065012)"
 		);
 	}
@@ -27,7 +27,7 @@ public class DSAShipmentManager {
 			"(4) Customer Order Data Entry\n" +
 			"(5) View Pending Customer Orders\n" +
 			"(6) Process Next Customer Order\n" +
-			"(0) Quit\n" +
+			"(0) Quit\n\n" +
 			"Enter a choice: "
 		);
 		return ConsoleInput.readInt();
