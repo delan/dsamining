@@ -1,43 +1,35 @@
-public class DSAQueue {
-	private static int DEFAULT_CAPACITY = 100;
-	private int count;
-	private Object[] array;
+import java.util.Iterator;
+public class DSAQueue implements Iterable {
+	private DSALinkedList list;
 	public DSAQueue() {
-		this.count = 0;
-		this.array = new Object[DEFAULT_CAPACITY];
-	}
-	public int getCount() {
-		return this.count;
+		this.list = new DSALinkedList();
 	}
 	public void enqueue(Object thing) {
-		if (this.isFull())
-			throw new RuntimeException(
-				"can't enqueue onto a full queue"
-			);
-		array[count++] = thing;
+		this.list.insertLast(thing);
 	}
 	public Object dequeue() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't dequeue from an empty queue"
 			);
-		Object thing = array[0];
-		for (int i = 0; i < count - 1; i++)
-			array[i] = array[i + 1];
-		--count;
-		return thing;
+		return this.list.removeFirst();
 	}
 	public Object peek() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't view the top element of an empty stack"
 			);
-		return array[0];
+		return this.list.peekFirst();
 	}
 	public boolean isEmpty() {
-		return this.count == 0;
+		try {
+			Object thing = this.list.peekFirst();
+			return false;
+		} catch (IllegalStateException e) {
+			return true;
+		}
 	}
-	public boolean isFull() {
-		return this.count == DEFAULT_CAPACITY;
+	public Iterator iterator() {
+		return list.iterator();
 	}
 }

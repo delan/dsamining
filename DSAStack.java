@@ -1,41 +1,35 @@
-public class DSAStack {
-	private static int DEFAULT_CAPACITY = 100;
-	private int count;
-	private Object[] array;
+import java.util.Iterator;
+public class DSAStack implements Iterable {
+	private DSALinkedList list;
 	public DSAStack() {
-		this.count = 0;
-		this.array = new Object[DEFAULT_CAPACITY];
-	}
-	public int getCount() {
-		return this.count;
+		this.list = new DSALinkedList();
 	}
 	public void push(Object thing) {
-		if (this.isFull())
-			throw new RuntimeException(
-				"can't push onto a full stack"
-			);
-		array[count++] = thing;
+		this.list.insertLast(thing);
 	}
-	// QUESTION: without "deleting" the object reference, will the object
-	// be prevented from being GC'd, and if so, is this a problem?
 	public Object pop() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't pop from an empty stack"
 			);
-		return array[--count];
+		return this.list.removeLast();
 	}
 	public Object top() {
 		if (this.isEmpty())
 			throw new RuntimeException(
 				"can't view the top element of an empty stack"
 			);
-		return array[count - 1];
+		return this.list.peekLast();
 	}
 	public boolean isEmpty() {
-		return this.count == 0;
+		try {
+			Object thing = this.list.peekFirst();
+			return false;
+		} catch (IllegalStateException e) {
+			return true;
+		}
 	}
-	public boolean isFull() {
-		return this.count == DEFAULT_CAPACITY;
+	public Iterator iterator() {
+		return list.iterator();
 	}
 }
