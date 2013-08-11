@@ -2,18 +2,20 @@ import io.*;
 public class DSAShipmentManager {
 	private DSALinkedList<IShed> shedList;
 	private DSAQueue<ShipmentOrder> orderQueue;
+	private TerminalHelper term;
 	public DSAShipmentManager() {
 		shedList = new DSALinkedList<IShed>();
 		orderQueue = new DSAQueue<ShipmentOrder>();
+		term = new TerminalHelper();
 	}
 	public void run() {
 		while (true) {
-			int choice = uiDisplayMainMenu();
+			int choice = this.uiDisplayMainMenu();
 			this.uiMainMenuChoice(choice);
 		}
 	}
 	private int uiDisplayMainMenu() {
-		TerminalHelper.newScreen(
+		term.newScreen(
 			"Main menu",
 			"(1) Add New Shed\n" +
 			"(2) Ore Delivery Data Entry\n" +
@@ -28,7 +30,7 @@ public class DSAShipmentManager {
 	}
 	private void uiMainMenuChoice(int choice) {
 		if (choice == 0) {
-			TerminalHelper.cleanup();
+			term.cleanup();
 			System.exit(0);
 		}
 	}

@@ -1,12 +1,33 @@
+import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 public class TerminalHelper {
 	public static final String CSI = "\u001B[";
 	public static final String BLOCK =
-		CSI + "7m" +            // set bold text
+		CSI + "7m" +            // negative video
 		" " +                   // space as "block"
-		CSI + "0m"              // reset graphics rendition
+		CSI + "27m"             // positive video
 	;
-	public static void newScreen(String title, String content)
-		throws java.io.IOException {
+	private PrintWriter out;
+	public TerminalHelper() {
+		try {
+			out = new PrintWriter(
+				new OutputStreamWriter(
+					System.out,
+					"UTF-8"
+				),
+				true
+			);
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("TerminalHelper: " + e);
+		}
+	}
+	public void print(String s) {
+		this.out.print(s);
+		this.out.flush();
+	}
+	public void newScreen(String title, String content) {
+		// newScreen needs to do the following things:
 		// The final position to leave the cursor for prompts, etc.
 		int final_row = 4;
 		int final_column = 3, default_final_column = 3;
@@ -31,14 +52,14 @@ public class TerminalHelper {
 		title = " " + title + " ";
 		int pad_left = (int)Math.floor((80 - title.length()) / 2.0) - 1;
 		int pad_right = (int)Math.ceil((80 - title.length()) / 2.0) - 1;
-		System.out.print(BLOCK);
+		print(BLOCK);
 		for (int i = 0; i < pad_left; i++)
-			System.out.write(line_char);
-		System.out.print(title);
+			print("\u2550");
+		print(title);
 		for (int i = 0; i < pad_right; i++)
-			System.out.write(line_char);
-		System.out.print(BLOCK);
-		System.out.print("\n");
+			print("\u2550");
+		print(BLOCK);
+		print("\n");
 		// Pad the content with one newline before plus some after.
 		content =
 			"\n" + content +
@@ -53,7 +74,7 @@ public class TerminalHelper {
 			BLOCK + " "
 		);
 		// Print out the content.
-		System.out.print(
+		print(
 			BLOCK + " " +
 			content +
 			CSI + "80G" +           // go to absolute column 80
@@ -61,7 +82,7 @@ public class TerminalHelper {
 		);
 		displayFooter();
 		// Move the cursor to the natural final position.
-		System.out.print(
+		print(
 			CSI +
 			String.valueOf(final_row) +
 			";" +
@@ -69,8 +90,8 @@ public class TerminalHelper {
 			"H"
 		);
 	}
-	public static void displayHeader() {
-		System.out.print(
+	public void displayHeader() {
+		print(
 			CSI + "2J" +            // clear entire screen
 			CSI + "H" +             // move cursor to top left
 			CSI + "1m" +            // set bold text
@@ -82,16 +103,16 @@ public class TerminalHelper {
 			"\n"
 		);
 	}
-	public static void displayFooter() {
-		System.out.print(
+	public void displayFooter() {
+		print(
 			CSI + "7m" +            // inverse video
 			"                                        " +
 			"                                        " +
 			CSI + "0m"              // reset graphics rendition
 		);
 	}
-	public static void cleanup() {
-		System.out.print(
+	public void cleanup() {
+		print(
 			CSI + "2J" +            // clear entire screen
 			CSI + "H"               // move cursor to top left
 		);
