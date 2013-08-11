@@ -1,6 +1,6 @@
 // DOUBLE ended, SINGLY linked list.
 import java.util.Iterator;
-public class DSALinkedList {
+public class DSALinkedList implements Iterable {
 	private class DSAListNode {
 		private Object thing;
 		private DSAListNode next;
@@ -105,5 +105,8 @@ public class DSALinkedList {
 			if (cur.getNext() == this.tail)
 				this.tail = cur;
 		return thing;
+	}
+	public Iterator iterator() {
+		return new DSALinkedListIterator(this);
 	}
 }
