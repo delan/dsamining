@@ -14,6 +14,7 @@ public class DSAShipmentManager {
 	}
 	private int uiDisplayMainMenu() {
 		TerminalHelper.newScreen(
+			"Main menu",
 			"(1) Add New Shed\n" +
 			"(2) Ore Delivery Data Entry\n" +
 			"(3) View Shed Contents\n" +
