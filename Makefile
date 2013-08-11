@@ -10,7 +10,9 @@ RUNCLASSES = DSAShipments.java
 	$(JC) $(JFLAGS) $*.java
 
 .java:
+	# The following two commands are for cygwin.
 	dos2unix java.sh
+	chmod +x java.sh
 	./java.sh $*
 
 all: $(CLASSES:.java=.class)
