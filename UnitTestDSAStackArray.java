@@ -12,14 +12,16 @@ public class UnitTestDSAStackArray
         int ii;
         int iNumPassed;
         int iNumTests;
-        DSAStack s;
+        // MODIFICATION: DSAStack -> DSAStackArray
+        DSAStackArray s;
         Ore nickelOre;
         OrePile orePile;
 
         // Assume Ore works...
         // MODIFICATION: constant from Ore.ORETYPE_(...) to OreType.(...).
         nickelOre = new Ore(OreType.NICKEL, "t");
-        s = new DSAStack();
+        // MODIFICATION: DSAStack -> DSAStackArray
+        s = new DSAStackArray();
         iNumTests = 0;
         iNumPassed = 0;
 
@@ -143,7 +145,8 @@ public class UnitTestDSAStackArray
         try {
             iNumTests++;
             System.out.print("Testing Object stack: ");
-            s = new DSAStack();
+            // MODIFICATION: DSAStack -> DSAStackArray();
+            s = new DSAStackArray();
             for (ii = 1; ii <= 10; ii++)
                 s.push("string test");
             iNumPassed++;

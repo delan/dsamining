@@ -1,8 +1,8 @@
-public class DSAStack {
+public class DSAStackArray {
 	private static int DEFAULT_CAPACITY = 100;
 	private int count;
 	private Object[] array;
-	public DSAStack() {
+	public DSAStackArray() {
 		this.count = 0;
 		this.array = new Object[DEFAULT_CAPACITY];
 	}

@@ -12,14 +12,16 @@ public class UnitTestDSAQueueArray
         int ii;
         int iNumPassed;
         int iNumTests;
-        DSAQueue q;
+        // MODIFICATION: DSAQueue -> DSAQueueArray
+        DSAQueueArray q;
         Ore ironOre;
         OrePile orePile;
 
         // Assume Ore works...
         // MODIFICATION: constant from Ore.ORETYPE_(...) to OreType.(...).
         ironOre = new Ore(OreType.IRON, "t");
-        q = new DSAQueue();
+        // MODIFICATION: DSAQueue -> DSAQueueArray
+        q = new DSAQueueArray();
         iNumTests = 0;
         iNumPassed = 0;
 
@@ -143,7 +145,8 @@ public class UnitTestDSAQueueArray
         try {
             iNumTests++;
             System.out.print("Testing Object queue: ");
-            q = new DSAQueue();
+            // MODIFICATION: DSAQueue -> DSAQueueArray
+            q = new DSAQueueArray();
             for (ii = 1; ii <= 10; ii++)
                 q.enqueue("string test");
             System.out.println("passed");

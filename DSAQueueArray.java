@@ -1,8 +1,8 @@
-public class DSAQueue {
+public class DSAQueueArray {
 	private static int DEFAULT_CAPACITY = 100;
 	private int count;
 	private Object[] array;
-	public DSAQueue() {
+	public DSAQueueArray() {
 		this.count = 0;
 		this.array = new Object[DEFAULT_CAPACITY];
 	}
