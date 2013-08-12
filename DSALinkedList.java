@@ -63,8 +63,7 @@ public class DSALinkedList<E> implements Iterable<E> {
 		return this.tail.getValue();
 	}
 	public void insertFirst(E thing) {
-		DSALinkedList<E>.DSAListNode<E> node =
-			new DSALinkedList<E>.DSAListNode<E>(thing);
+		DSAListNode<E> node = new DSAListNode<E>(thing);
 		if (this.isEmpty())
 			this.tail = node;
 		else
@@ -72,8 +71,7 @@ public class DSALinkedList<E> implements Iterable<E> {
 		this.head = node;
 	}
 	public void insertLast(E thing) {
-		DSALinkedList<E>.DSAListNode<E> node =
-			new DSALinkedList<E>.DSAListNode<E>(thing);
+		DSAListNode<E> node = new DSAListNode<E>(thing);
 		if (this.isEmpty())
 			this.head = node;
 		else
