@@ -1,10 +1,15 @@
 public enum OreType {
-	IRON            (1),
-	NICKEL          (2),
+	IRON            (1,     "iron"),
+	NICKEL          (2,     "nickel"),
 	;
 	private int value;
-	private OreType(int value) {
+	private String friendlyName;
+	private OreType(int value, String friendlyName) {
 		this.value = value;
+		this.friendlyName = friendlyName;
+	}
+	public String toString() {
+		return this.friendlyName;
 	}
 	public static OreType getByValue(int value) {
 		OreType result = null;
