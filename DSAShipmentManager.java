@@ -70,14 +70,14 @@ public class DSAShipmentManager {
 				"Add new shed",
 				"[Enter] Next field",
 				"Valid ore types:\n\n" +
-				OreType.listValues() +
-				"\nEnter shed name: "
+				OreType.listValues() + "\n" +
+				term.getFieldString("Enter shed name")
 			);
 			shedName = ConsoleInput.readLine();
 			term.setPageFooter("[Enter] Complete entry");
 			term.appendScreen(
 				shedName + "\n" +
-				"Enter ore type:  "
+				term.getFieldString("Enter ore type")
 			);
 			oreTypeValue = ConsoleInput.readInt();
 			for (IShed shed : shedList)
@@ -120,18 +120,21 @@ public class DSAShipmentManager {
 			term.newScreen(
 				"Ore delivery data entry",
 				"[Enter] Next field",
-				"Enter shed name: "
+				term.getFieldString("Enter shed name")
 			);
 			shedName = ConsoleInput.readLine();
 			term.appendScreen(
 				shedName + "\n" +
-				"Enter ore weight (" + defaultUnits + "): "
+				term.getFieldString(
+					"Enter ore weight (" +
+					defaultUnits + ")"
+				)
 			);
 			oreWeight = ConsoleInput.readDouble();
 			term.setPageFooter("[Enter] Complete entry");
 			term.appendScreen(
 				oreWeight + "\n" +
-				"Enter ore grade (%): "
+				term.getFieldString("Enter ore grade (%)")
 			);
 			oreGrade = ConsoleInput.readDouble();
 			for (IShed shed : shedList)

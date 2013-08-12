@@ -51,9 +51,12 @@ public class TerminalHelper {
 		// Additional newlines to pad with before reaching footer.
 		int padNewlines = TERM_HEIGHT - 5;
 		String wrappedContent = "";
+		// Save the inputs for methods like redraw() and appendScreen().
 		this.currentPageTitle = pageTitle;
 		this.currentPageFooter = pageFooter;
 		this.currentContent = content;
+		// Clear the screen.
+		this.cleanup();
 		// Process the content to figure out the values for above.
 		// Also insert newlines to wrap long lines where necessary.
 		for (int i = 0; i < content.length(); i++) {
@@ -62,6 +65,9 @@ public class TerminalHelper {
 				finalRow++;
 				finalCol = defaultFinalCol;
 				padNewlines--;
+			} else if (content.charAt(i) == '\b') {
+				if (finalCol > 2)
+					finalCol--;
 			} else {
 				finalCol++;
 				if (finalCol == TERM_WIDTH - 1) {
@@ -118,6 +124,12 @@ public class TerminalHelper {
 	public void setPageFooter(String pageFooter) {
 		this.currentPageFooter = pageFooter;
 		redraw();
+	}
+	public String getFieldString(String prompt) {
+		String pad = repeatText(" ", 36 - prompt.length());
+		String dots = repeatText(".", 34);
+		String reverse = repeatText("\b", 36);
+		return prompt + ":" + pad + "[ " + dots + " ]" + reverse;
 	}
 	private String repeatText(String text, int num) {
 		String result = "";
