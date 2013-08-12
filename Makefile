@@ -5,10 +5,10 @@ JFLAGS = -g -Werror
 TESTCLASSES = $(wildcard UnitTest*.java)
 RUNCLASSES = DSAShipments.java
 
+# The first command in the following recipe is for cygwin.
+
 .java:
-	# The following two commands are for cygwin.
-	dos2unix java.sh
-	chmod +x java.sh
+	dos2unix java.sh > /dev/null 2>&1
 	./java.sh $*
 
 all:
