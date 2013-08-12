@@ -128,6 +128,7 @@ public class DSAShipmentManager {
 				"Enter ore weight (" + defaultUnits + "): "
 			);
 			oreWeight = ConsoleInput.readDouble();
+			term.setPageFooter("[Enter] Complete entry");
 			term.appendScreen(
 				oreWeight + "\n" +
 				"Enter ore grade (%): "
