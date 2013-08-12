@@ -30,7 +30,7 @@ public class DSAShipmentManager {
 			"(5) View pending customer orders\n" +
 			"(6) Process next customer order\n" +
 			"(0) Quit\n\n" +
-			"Enter a choice: "
+			term.getFieldString("Enter a choice")
 		);
 		return ConsoleInput.readInt();
 	}
