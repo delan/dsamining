@@ -14,6 +14,9 @@ public class TerminalHelper {
 	private PrintWriter out;
 	private String appTitle;
 	private String appFooter;
+	private String currentPageTitle;
+	private String currentPageFooter;
+	private String currentContent;
 	public TerminalHelper(String appTitle, String appFooter) {
 		this.appTitle = appTitle;
 		this.appFooter = appFooter;
@@ -29,7 +32,10 @@ public class TerminalHelper {
 			System.out.println("TerminalHelper: " + e);
 		}
 	}
-	public void newScreen(String pageTitle, String content) {
+	public void newScreen(
+		String pageTitle,
+		String pageFooter,
+		String content) {
 		// newScreen needs to do the following things:
 		// 1. Print the appTitle bold, centred and in negative video.
 		// 2. Print the pageTitle centred between double horizontals.
@@ -45,6 +51,9 @@ public class TerminalHelper {
 		// Additional newlines to pad with before reaching footer.
 		int padNewlines = TERM_HEIGHT - 5;
 		String wrappedContent = "";
+		this.currentPageTitle = pageTitle;
+		this.currentPageFooter = pageFooter;
+		this.currentContent = content;
 		// Process the content to figure out the values for above.
 		// Also insert newlines to wrap long lines where necessary.
 		for (int i = 0; i < content.length(); i++) {
@@ -63,13 +72,12 @@ public class TerminalHelper {
 				}
 			}
 		}
-		content = wrappedContent;
 		this.printGlobalHeader();
 		this.printPageHeader(pageTitle);
 		// Pad the content with newlines to fit TERM_HEIGHT.
-		content = content + repeatText("\n", padNewlines);
+		wrappedContent = wrappedContent + repeatText("\n", padNewlines);
 		// Insert "walls" on either side of each newline.
-		content = content.replaceAll(
+		wrappedContent = wrappedContent.replaceAll(
 			"\n",
 			CSI + TERM_WIDTH + "G" +  // go to column TERM_WIDTH
 			BLOCK + "\n" +
@@ -80,11 +88,11 @@ public class TerminalHelper {
 			BLOCK +
 			repeatText(" ", TERM_WIDTH - 2) +
 			BLOCK + "\n" + BLOCK + " " +
-			content +
+			wrappedContent +
 			CSI + TERM_WIDTH + "G" +  // go to column TERM_WIDTH
 			BLOCK + "\n"
 		);
-		this.printGlobalFooter();
+		this.printFooter();
 		// Move the cursor to the natural final position.
 		print(
 			CSI +
@@ -94,11 +102,22 @@ public class TerminalHelper {
 			"H"
 		);
 	}
+	public void appendScreen(String content) {
+		this.newScreen(
+			this.currentPageTitle,
+			this.currentPageFooter,
+			this.currentContent + content
+		);
+	}
 	public void cleanup() {
 		print(
 			CSI + "2J" +            // clear entire screen
 			CSI + "H"               // move cursor to top left
 		);
+	}
+	public void setPageFooter(String pageFooter) {
+		this.currentPageFooter = pageFooter;
+		redraw();
 	}
 	private String repeatText(String text, int num) {
 		String result = "";
@@ -141,15 +160,29 @@ public class TerminalHelper {
 			" " + BLOCK + "\n"
 		);
 	}
-	private void printGlobalFooter() {
+	private void printFooter() {
+		int len =
+			this.currentPageFooter.length() +
+			this.appFooter.length();
 		print(
 			CSI + "7m" +            // inverse video
-			centredText(this.appFooter, " ", TERM_WIDTH) +
+			"  " +
+			this.currentPageFooter +
+			repeatText(" ", TERM_WIDTH - 4 - len) +
+			this.appFooter +
+			"  " +
 			CSI + "0m"              // reset graphics rendition
 		);
 	}
 	private void print(String s) {
 		this.out.print(s);
 		this.out.flush();
+	}
+	private void redraw() {
+		this.newScreen(
+			this.currentPageTitle,
+			this.currentPageFooter,
+			this.currentContent
+		);
 	}
 }

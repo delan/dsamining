@@ -21,7 +21,7 @@ public enum MassUnit {
 				result = unit;
 		if (result == null)
 			throw new IllegalArgumentException(
-				"invalid suffix: " +
+				"MassUnit: invalid suffix: " +
 				suffix
 			);
 		return result;

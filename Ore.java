@@ -5,6 +5,10 @@ public class Ore {
 		this.oreType = type;
 		this.setUnits(units);
 	}
+	public Ore(OreType type, MassUnit units) {
+		this.oreType = type;
+		this.setUnits(units);
+	}
 	public Ore(Ore ore) {
 		this.oreType = ore.getOreType();
 		this.units = ore.getUnits();
@@ -17,5 +21,8 @@ public class Ore {
 	}
 	public void setUnits(String units) {
 		this.units = MassUnit.getBySuffix(units);
+	}
+	public void setUnits(MassUnit units) {
+		this.units = units;
 	}
 }
