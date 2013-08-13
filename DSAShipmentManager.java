@@ -171,7 +171,84 @@ public class DSAShipmentManager {
 		}
 	}
 	private void uiShowShedContents() {
-		//
+		String tempOutput = "";
+		String shedName = "";
+		IShed targetShed = null;
+		try {
+			for (IShed shed : shedList)
+				tempOutput += "* " + shed.getName() + "\n";
+			term.newScreen(
+				"View shed contents",
+				"[Enter] Choose option",
+				"List of available sheds:\n\n" +
+				tempOutput + "\n" +
+				term.getFieldString("Enter a choice")
+			);
+			shedName = ConsoleInput.readLine();
+			for (IShed shed : shedList)
+				if (shed.getName().equals(shedName))
+					targetShed = shed;
+			if (targetShed == null)
+				throw new Exception(
+					"no shed with name '" + shedName + "'"
+				);
+		} catch (Exception e) {
+			term.appendScreen(
+				shedName + "\n\n" +
+				"Error: " + e.getMessage() + ". "
+			);
+			term.setPageFooter("[Enter] Return to main menu");
+			ConsoleInput.readLine();
+			return;
+		}
+		tempOutput = "";
+		for (OrePile pile : targetShed)
+			tempOutput +=
+				"\u2502 " +
+				String.format(
+					"%20.12g",
+					pile.getWeight()
+				) + " \u2502 " +
+				String.format(
+					"%19.12g%%",
+					pile.getGrade()
+				) + " \u2502 " +
+				String.format(
+					"%20.12g",
+					pile.getWeight() *
+						pile.getGrade() / 100
+				) + " \u2502\n";
+		term.newScreen(
+			"Contents of " + shedName,
+			"[Enter] Return to main menu",
+			"All weights in units: " + defaultUnits + "\n\n" +
+			"\u250C" +
+			term.repeatText("\u2500", 22) +
+			"\u252C" +
+			term.repeatText("\u2500", 22) +
+			"\u252C" +
+			term.repeatText("\u2500", 22) +
+			"\u2510\n" +
+			"\u2502 Ore weight           " +
+			"\u2502 Grade percentage     " +
+			"\u2502 Metal weight         \u2502\n" +
+			"\u251C" +
+			term.repeatText("\u2500", 22) +
+			"\u253C" +
+			term.repeatText("\u2500", 22) +
+			"\u253C" +
+			term.repeatText("\u2500", 22) +
+			"\u2524\n" +
+			tempOutput +
+			"\u2514" +
+			term.repeatText("\u2500", 22) +
+			"\u2534" +
+			term.repeatText("\u2500", 22) +
+			"\u2534" +
+			term.repeatText("\u2500", 22) +
+			"\u2518\n"
+		);
+		ConsoleInput.readLine();
 	}
 	private void uiOrderEntry() {
 		//

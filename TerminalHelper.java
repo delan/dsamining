@@ -131,7 +131,7 @@ public class TerminalHelper {
 		String reverse = repeatText("\b", 36);
 		return prompt + ":" + pad + "[ " + dots + " ]" + reverse;
 	}
-	private String repeatText(String text, int num) {
+	public String repeatText(String text, int num) {
 		String result = "";
 		if (num > 0)
 			result = new String(new char[num]).replace("\0", text);
