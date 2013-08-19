@@ -17,7 +17,7 @@ public class DSAQueue<E> implements Iterable<E> {
 	public E peek() {
 		if (this.isEmpty())
 			throw new RuntimeException(
-				"can't view the top element of an empty stack"
+				"can't view the top element of an empty queue"
 			);
 		return this.list.peekFirst();
 	}

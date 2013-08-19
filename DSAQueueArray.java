@@ -30,7 +30,7 @@ public class DSAQueueArray {
 	public Object peek() {
 		if (this.isEmpty())
 			throw new RuntimeException(
-				"can't view the top element of an empty stack"
+				"can't view the top element of an empty queue"
 			);
 		return array[0];
 	}
