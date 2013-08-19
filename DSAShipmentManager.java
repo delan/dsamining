@@ -398,7 +398,4 @@ public class DSAShipmentManager {
 	private void uiProcessNextOrder() {
 		//
 	}
-	private void findShedByName() {
-		//
-	}
 }
