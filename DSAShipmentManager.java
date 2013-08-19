@@ -251,10 +251,149 @@ public class DSAShipmentManager {
 		ConsoleInput.readLine();
 	}
 	private void uiOrderEntry() {
-		//
+		String customerName;
+		String shippingDest;
+		int oreTypeValue;
+		OreType oreType;
+		double unitPrice;
+		double requiredMetalWeight = 0.0;
+		try {
+			term.newScreen(
+				"Customer order data entry",
+				"[Enter] Next field",
+				"Valid ore types:\n\n" +
+				OreType.listValues() + "\n" +
+				term.getFieldString("Enter customer name")
+			);
+			customerName = ConsoleInput.readLine();
+			term.appendScreen(
+				customerName + "\n" +
+				term.getFieldString(
+					"Enter shipping destination"
+				)
+			);
+			shippingDest = ConsoleInput.readLine();
+			term.appendScreen(
+				shippingDest + "\n" +
+				term.getFieldString("Enter ore type")
+			);
+			oreTypeValue = ConsoleInput.readInt();
+			oreType = OreType.getByValue(oreTypeValue);
+			term.appendScreen(
+				oreTypeValue + "\n" +
+				term.getFieldString(
+					"Enter price ($/" +
+					defaultUnits +
+					")"
+				)
+			);
+			unitPrice = ConsoleInput.readDouble();
+			term.setPageFooter("[Enter] Complete entry");
+			term.appendScreen(
+				unitPrice + "\n" +
+				term.getFieldString(
+					"Enter metal weight (" +
+					defaultUnits +
+					")"
+				)
+			);
+			requiredMetalWeight = ConsoleInput.readDouble();
+			ShipmentOrder order = new ShipmentOrder(
+				customerName,
+				shippingDest,
+				new Ore(oreType, defaultUnits),
+				requiredMetalWeight,
+				unitPrice
+			);
+			orderQueue.enqueue(order);
+			term.appendScreen(
+				requiredMetalWeight + "\n\n" +
+				"Success: order #" +
+				order.getOrderID() +
+				", worth $" +
+				order.calcShipmentValue() +
+				". "
+			);
+		} catch (Exception e) {
+			term.appendScreen(
+				requiredMetalWeight + "\n\n" +
+				"Error: " + e.getMessage() + ". "
+			);
+		} finally {
+			term.setPageFooter("[Enter] Return to main menu");
+			ConsoleInput.readLine();
+		}
 	}
 	private void uiShowPendingOrders() {
-		//
+		String tempOutput = "";
+		for (ShipmentOrder order : orderQueue)
+			tempOutput +=
+				"\u2502 " +
+				String.format(
+					"%3d",
+					order.getOrderID()
+				) + " \u2502 " +
+				String.format(
+					"%-15s",
+					order.getCustomerName()
+				) + " \u2502 " +
+				String.format(
+					"%-10s",
+					order.getOre().getOreType()
+				) + " \u2502 " +
+				String.format(
+					"%13.7g",
+					order.getOrderedMetalWt()
+				) + " \u2502 " +
+				String.format(
+					"%13.7g",
+					order.calcShipmentValue()
+				) + " \u2502\n";
+		term.newScreen(
+			"View pending customer orders",
+			"[Enter] Return to main menu",
+			"All weights in units: " + defaultUnits + "\n\n" +
+			"\u250C" +
+			term.repeatText("\u2500", 5) +
+			"\u252C" +
+			term.repeatText("\u2500", 17) +
+			"\u252C" +
+			term.repeatText("\u2500", 12) +
+			"\u252C" +
+			term.repeatText("\u2500", 15) +
+			"\u252C" +
+			term.repeatText("\u2500", 15) +
+			"\u2510\n" +
+			"\u2502 ID  " +
+			"\u2502 Customer name   " +
+			"\u2502 Ore type   " +
+			"\u2502 Metal weight  " +
+			"\u2502 Total value   \u2502\n" +
+			"\u251C" +
+			term.repeatText("\u2500", 5) +
+			"\u253C" +
+			term.repeatText("\u2500", 17) +
+			"\u253C" +
+			term.repeatText("\u2500", 12) +
+			"\u253C" +
+			term.repeatText("\u2500", 15) +
+			"\u253C" +
+			term.repeatText("\u2500", 15) +
+			"\u2524\n" +
+			tempOutput +
+			"\u2514" +
+			term.repeatText("\u2500", 5) +
+			"\u2534" +
+			term.repeatText("\u2500", 17) +
+			"\u2534" +
+			term.repeatText("\u2500", 12) +
+			"\u2534" +
+			term.repeatText("\u2500", 15) +
+			"\u2534" +
+			term.repeatText("\u2500", 15) +
+			"\u2518\n"
+		);
+		ConsoleInput.readLine();
 	}
 	private void uiProcessNextOrder() {
 		//
