@@ -396,6 +396,62 @@ public class DSAShipmentManager {
 		ConsoleInput.readLine();
 	}
 	private void uiProcessNextOrder() {
-		//
+		ShipmentOrder order = null;
+		IShed shed = null;
+		double oreToLoad;
+		try {
+			term.newScreen(
+				"Process next customer order",
+				"[Enter] Choose option",
+				"Details of next order:\n"
+			);
+			order = orderQueue.peek();
+			term.appendScreen(
+				"\nID:         " + order.getOrderID() +
+				"\nOre type:   " + order.getOre().getOreType() +
+				"\nUnit price: " + order.getUnitPrice() +
+				"\nCustomer:   " + order.getCustomerName() +
+				"\nLocation:   " + order.getShippingDest() +
+				"\nMetal:      " + order.getOrderedMetalWt() +
+					" " + order.getOre().getUnits() +
+				"\nValue:      " + order.calcShipmentValue() +
+				"\n\n" +
+				term.getFieldString("Continue? [y/n]")
+			);
+			if (!ConsoleInput.readLine().equals("y")) {
+				term.appendScreen(
+					"n\n\n" +
+					"Order processing cancelled. "
+				);
+				return;
+			}
+			for (IShed s : shedList)
+				if (
+					s.getOreType() ==
+					order.getOre().getOreType()
+				)
+					shed = s;
+			term.appendScreen(
+				"y\n\n" +
+				"Using shed named: " + shed.getName() + "\n\n"
+			);
+			oreToLoad = shed.satisfyOrder(order);
+			order.setShippedOreWt(oreToLoad);
+			orderQueue.dequeue();
+			term.appendScreen(
+				"Order processed. Load " +
+				oreToLoad + " " + defaultUnits +
+				" onto the ship. "
+			);
+		} catch (Exception e) {
+			term.appendScreen(
+				"\n\n" +
+				"Error: " + e.getMessage() + ". "
+			);
+			orderQueue.enqueue(orderQueue.dequeue());
+		} finally {
+			term.setPageFooter("[Enter] Return to main menu");
+			ConsoleInput.readLine();
+		}
 	}
 }
