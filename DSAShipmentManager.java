@@ -448,7 +448,8 @@ public class DSAShipmentManager {
 				"\n\n" +
 				"Error: " + e.getMessage() + ". "
 			);
-			orderQueue.enqueue(orderQueue.dequeue());
+			if (!orderQueue.isEmpty())
+				orderQueue.enqueue(orderQueue.dequeue());
 		} finally {
 			term.setPageFooter("[Enter] Return to main menu");
 			ConsoleInput.readLine();
