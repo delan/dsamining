@@ -157,7 +157,7 @@ public class ShedIron implements IShed
       double fOreToLoad, fOreToTake, fMetalRemaining;
       OrePile pile;
 
-      if (order.getOrderedMetalWt() > calcTotalOreWeight())
+      if (order.getOrderedMetalWt() > calcTotalMetalWeight())
          throw new IllegalStateException("Not enough ore in this Shed to fulfill the order");
 
       fMetalRemaining = order.getOrderedMetalWt();
