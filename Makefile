@@ -35,10 +35,13 @@ tersetest: compile
 run: compile $(RUNCLASSES:.java=)
 
 clean:
-	rm -fv *.class
-	rm -rfv submission1
+	rm -rfv *.class submission1 submission2
 
-submission1:
+submission1: clean
 	mkdir -pv submission1
 	cp -v $(SUBMISSION1FILES) submission1
 	tar cvzf submission1/submission1.tar.gz submission1/*
+
+submission2: clean
+	mkdir -pv submission2
+	tar cvzf submission2/submission2.tar.gz * .git* --exclude='submission*'

@@ -55,6 +55,7 @@ The Makefile mentioned above has the following rules:
 * test: runs all unit tests, including all output
 * tersetest: runs all unit tests, only printing each harness' total score
 * submission1: archives a subset of files for the preliminary submission
+* submission2: archives all files for the final submission
 
 Delan Azabani
 #17065012
