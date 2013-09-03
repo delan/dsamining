@@ -1,4 +1,4 @@
-// The following test harness has been trivially modified to suit the class and
+// The following class has been trivially modified to suit the class and
 // method design of the production code. Changes marked with "MODIFICATION".
 
 import java.util.*;	// for Iterator and Iterable
